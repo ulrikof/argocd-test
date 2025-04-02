@@ -1,0 +1,55 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: grandchild-ubuntu
+  labels:
+    kubevirt.io/os: linux
+spec:
+  runStrategy: Always
+  dataVolumeTemplates:
+    - metadata:
+        name: grandchild-ubuntu-dv
+      spec:
+        storage:
+          accessModes:
+            - ReadWriteOnce
+          volumeMode: Filesystem
+          resources:
+            requests:
+              storage: 4Gi
+        source:
+          http:
+            url: "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: grandchild-ubuntu
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        resources:
+          requests:
+            memory: 1024M
+        devices:
+          disks:
+            - name: disk0
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              cdrom:
+                bus: sata
+                readonly: true
+      volumes:
+        - name: disk0
+          dataVolume:
+            name: grandchild-ubuntu-dv
+        - name: cloudinitdisk
+          cloudInitNoCloud:
+            userData: |
+              #cloud-config
+              hostname: grandchild-ubuntu
+              ssh_pwauth: true
+              disable_root: false
+              ssh_authorized_keys:
+                - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDU/QrFBAIDFS8k251poJ7RTxvrBuFv4jEBWZ+6RW+zw7qL/nsddFMqrL3BKR0Z8BAHq+x6g98J6qz4NiuvymwCpM9hnaRimEo6zbiIwQ3G1Aoj/N0HisbVFdDt52qHaxTDoz/hdJLbWE+CeUlBOfmr+8A/ERHb9fRpsbLfyw7he82LYQqB26vXzL44cGZ4siI7JyHaXgSfAKQEKGAEVO9ol5xdX/SqQmJn+GmCc8Lz8v9/PxXtIbxiky6C40VJ9y+2ik7VNPU7oXMccIXxDtND2brSnZqg0KTQX1J9ZtdC6TpiFhL4/blQZTV0I9HxNlQB8EcFSbawngftk/ATxcHGiBI7rd/jWbL0Cgpo2NSjzAsbfKcpb02M/DuL8PbwnMLQA+MdyiHc6MMpciYiFg8ydOUJgG9hAjc/dOSfqVV+Os+YKu3Wwo8Jq2O7RQiHKNVGcbfm/OA/X5dg7PTKGIWTur/PtHy00be3skwu93T4HC1RczyxE1Cr2zPKKZlAxuE= ubuntu@grandchild-ubuntu
