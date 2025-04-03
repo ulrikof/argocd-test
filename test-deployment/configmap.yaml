@@ -7,6 +7,6 @@ data:
     <html>
     <head><title>Talos Kubernetes Test</title></head>
     <body>
-      <h1>Hello, I am a webserver in a container running in a Kubernetes cluster using Talos!</h1>
+      <h1>Hello, I am a webserver in a container running in a Kubernetes cluster using Talos on Kubevirt inside another kubernetes cluster running on bare-metal talos which got deployed by argocd!</h1>
     </body>
     </html>
