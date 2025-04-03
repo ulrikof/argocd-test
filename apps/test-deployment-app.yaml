@@ -1,21 +1,21 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: test-deployment
-#   namespace: argocd
-# spec:
-#   project: default
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-deployment
+  namespace: argocd
+spec:
+  project: default
 
-#   source:
-#     repoURL: https://github.com/ulrikof/argocd-test
-#     targetRevision: main
-#     path: test-deployment # <- This should be a folder in your repo
+  source:
+    repoURL: https://github.com/ulrikof/argocd-test
+    targetRevision: main
+    path: test-deployment # <- This should be a folder in your repo
 
-#   destination:
-#     server: https://kubernetes.default.svc
-#     namespace: test-deployment
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: test-deployment
 
-#   syncPolicy:
-#     automated:
-#       prune: true
-#       selfHeal: true
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
