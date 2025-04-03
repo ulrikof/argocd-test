@@ -3,3 +3,9 @@ kind: Kustomization
 
 resources:
   - https://raw.githubusercontent.com/longhorn/longhorn/v1.8.1/deploy/longhorn.yaml
+
+patches:
+  - target:
+      kind: Namespace
+      name: longhorn-system
+    path: namespace-patch.yaml
