@@ -1,0 +1,9 @@
+apiVersion: builtin
+kind: ConfigMapGenerator
+metadata:
+  name: kubevirt-operator
+annotations:
+  argocd.argoproj.io/sync-wave: "0"
+behavior: merge
+files:
+  - https://github.com/kubevirt/kubevirt/releases/download/v1.5.0/kubevirt-operator.yaml
