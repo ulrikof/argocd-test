@@ -8,4 +8,4 @@ patches:
   - target:
       kind: Namespace
       name: longhorn-system
-    path: namespace-patch.yaml
+    path: namespace.yaml
