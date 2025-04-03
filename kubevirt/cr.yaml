@@ -1,9 +1,0 @@
-apiVersion: builtin
-kind: ConfigMapGenerator
-metadata:
-  name: kubevirt-cr
-annotations:
-  argocd.argoproj.io/sync-wave: "1"
-behavior: merge
-files:
-  - https://github.com/kubevirt/kubevirt/releases/download/v1.5.0/kubevirt-cr.yaml
